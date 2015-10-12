@@ -4,7 +4,7 @@
   "description": "AVA + sinon + promises + sourcemaps = zopf",
   "main": "index.js",
   "scripts": {
-    "test": "standard ."
+    "test": "ava spec && standard"
   },
   "repository": "https://github.com/itchio/zopf",
   "bugs": "https://github.com/itchio/zopf/issues",

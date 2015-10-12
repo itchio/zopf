@@ -24,7 +24,7 @@ pretty much like [tape][]:
 var test = require('zopf')
 
 test('basic test', function (t) {
-  t.equal(true, true)
+  t.is(true, true)
 })
 ```
 
@@ -50,7 +50,7 @@ test('using promises', t => {
   mock.expects('bar').returns(Promise.resolve('Success!'))
 
   return foo.bar().then(res => {
-    t.equal(res, 'Success!')
+    t.is(res, 'Success!')
   })
 })
 ```
@@ -69,15 +69,20 @@ In that last example:
 
 ## Running tests
 
-I (@fasterthanlime) recommend writing your tests in ES2015 and transpiling
-them using something like [babel][], perhaps together with [grunt][].
+Simply use [AVA][] to run your zopf tests - as long as you `require('zopf')`
+instead of `require('ava')` you'll get all the zopf niceties for free.
 
-[babel]: https://babeljs.io/
-[grunt]: http://gruntjs.com/
+The best way is probably to run `npm install --save-dev ava` and add an npm
+script to your package.json:
 
-Then, you can simply use [AVA][] to run your zopf tests - as long as you
-`require('zopf')` instead of `require('ava')` you'll get all the zopf niceties
-for free.
+```json
+{
+  "name": "yourpackage",
+  "scripts": {
+    "test": "ava 'spec/*-test.js'"
+  }
+}
+```
 
 ## Name meaning / pronunciation
 

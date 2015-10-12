@@ -1,6 +1,6 @@
 {
   "name": "zopf",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "AVA + sinon + promises + sourcemaps = zopf",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "ava": "^0.2.0",
     "bluebird": "^2.10.2",
+    "proxyquire": "^1.7.3",
     "sinon": "^1.17.1",
     "source-map-support": "^0.3.2"
   },

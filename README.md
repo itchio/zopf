@@ -67,6 +67,12 @@ In that last example:
 [tape]: https://www.npmjs.com/package/tape
 [sinon]: http://sinonjs.org/
 
+## Serial tests
+
+Since [AVA][] runs tests concurrently by default, but that doesn't work well
+when mocking the same object differently, zopf supports AVA-style serial test
+definition: simply use `test.serial` instead of `test`.
+
 ## Running tests
 
 Simply use [AVA][] to run your zopf tests - as long as you `require('zopf')`

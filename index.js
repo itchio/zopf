@@ -18,8 +18,9 @@ var wrap = function (fn) {
         reject(e)
       }
       resolve()
-    }).finally(() => {
+    }).then(() => {
       sandbox.verifyAndRestore()
+    }).finally(() => {
       t.end()
     })
   }

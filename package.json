@@ -1,6 +1,6 @@
 {
   "name": "zopf",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AVA + sinon + promises + sourcemaps = zopf",
   "main": "index.js",
   "scripts": {

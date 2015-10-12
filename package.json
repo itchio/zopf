@@ -1,0 +1,28 @@
+{
+  "name": "zopf",
+  "version": "1.0.0",
+  "description": "AVA + sinon + promises + sourcemaps = zopf",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard ."
+  },
+  "repository": "https://github.com/itchio/zopf",
+  "bugs": "https://github.com/itchio/zopf/issues",
+  "author": "Amos Wenger <amos@itch.io>",
+  "contributors": [
+    {
+      "name": "Amos Wenger",
+      "email": "amos@itch.io"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "ava": "^0.2.0",
+    "bluebird": "^2.10.2",
+    "sinon": "^1.17.1",
+    "source-map-support": "^0.3.2"
+  },
+  "devDependencies": {
+    "standard": "^5.3.1"
+  }
+}

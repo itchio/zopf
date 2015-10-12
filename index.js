@@ -19,7 +19,7 @@ var wrap = function (fn) {
       }
       resolve()
     }).finally(() => {
-      sandbox.restore()
+      sandbox.verifyAndRestore()
       t.end()
     })
   }

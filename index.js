@@ -12,8 +12,6 @@ var wrap = function (fn) {
       properties: ['spy', 'stub', 'mock']
     })
 
-    t.require = require('proxyquire').noCallThru().noPreserveCache()
-
     // returning a promise makes AVA run it asynchronously
     return new Promise(function (resolve, reject) {
       try {

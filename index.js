@@ -19,7 +19,7 @@ var wrap = function (fn) {
       try {
         resolve(fn(t))
       } catch (e) {
-        reject(e)
+        reject(e.stack)
       }
       resolve()
     }).then(() => {

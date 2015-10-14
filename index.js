@@ -37,7 +37,7 @@ var wrap = function (title, fn) {
 
     Promise.method(fn)(t).then(() => {
       // Only verify sandbox if we didn't get another response
-      sandbox.verifyAndRestore()
+      sandbox.verify()
     }).catch((e) => {
       if (e && e.stack) {
         var lines = e.stack.split('\n')
@@ -68,10 +68,12 @@ var wrap = function (title, fn) {
       } else {
         t.fail(e)
       }
-    }).finally(() => {
+    }).then(() => {
       if (t.assertCount === 0) {
         t.pass('pass')
       }
+    }).finally(() => {
+      sandbox.restore()
       t.end()
     })
   }

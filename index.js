@@ -14,6 +14,13 @@ var wrap = function (fn) {
       properties: ['spy', 'stub', 'mock']
     })
 
+    t.rejects = function (promise) {
+      var sentinel = t.spy()
+      return promise.catch(sentinel).finally(function () {
+        sinon.assert.calledOnce(sentinel)
+      })
+    }
+
     // returning a promise makes AVA run it asynchronously
     return Promise.method(fn)(t).then(() => {
       // Only verify sandbox if we didn't get another response

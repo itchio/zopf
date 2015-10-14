@@ -4,7 +4,7 @@
   "description": "tape + sinon + promises + sourcemaps = zopf",
   "main": "index.js",
   "scripts": {
-    "test": "tape spec && standard"
+    "test": "tape test/*-spec.js && standard"
   },
   "repository": "https://github.com/itchio/zopf",
   "bugs": "https://github.com/itchio/zopf/issues",

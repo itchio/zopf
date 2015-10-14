@@ -22,7 +22,6 @@ var wrap = function (fn) {
       if (e && e.stack) {
         var lines = e.stack.split('\n')
         var i = 0
-        var out = ''
 
         // find first zopf occurence in stack trace
         while (i < lines.length) {

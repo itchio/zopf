@@ -1,10 +1,10 @@
 {
   "name": "zopf",
   "version": "1.6.0",
-  "description": "AVA + sinon + promises + sourcemaps = zopf",
+  "description": "tape + sinon + promises + sourcemaps = zopf",
   "main": "index.js",
   "scripts": {
-    "test": "ava spec && standard"
+    "test": "tape spec && standard"
   },
   "repository": "https://github.com/itchio/zopf",
   "bugs": "https://github.com/itchio/zopf/issues",
@@ -17,10 +17,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "ava": "^0.2.0",
     "bluebird": "^2.10.2",
     "sinon": "^1.17.1",
-    "source-map-support": "^0.3.2"
+    "source-map-support": "^0.3.2",
+    "tape": "^4.2.1"
   },
   "devDependencies": {
     "standard": "^5.3.1"

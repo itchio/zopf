@@ -1,6 +1,6 @@
 require('source-map-support').install()
 
-var ava = require('ava')
+var tape = require('tape')
 var sinon = require('sinon')
 var Promise = require('bluebird')
 
@@ -21,8 +21,7 @@ var wrap = function (fn) {
       })
     }
 
-    // returning a promise makes AVA run it asynchronously
-    return Promise.method(fn)(t).then(() => {
+    Promise.method(fn)(t).then(() => {
       // Only verify sandbox if we didn't get another response
       sandbox.verifyAndRestore()
     }).catch((e) => {
@@ -40,12 +39,14 @@ var wrap = function (fn) {
           i++
         }
 
-        throw lines.slice(0, i).filter(function (x) {
+        t.fail(lines.slice(0, i).filter(function (x) {
           return !/node_modules.bluebird/.test(x)
-        }).join('\n')
+        }).join('\n'))
       } else {
-        throw e
+        t.fail(e)
       }
+    }).finally(() => {
+      t.end()
     })
   }
 }
@@ -59,20 +60,7 @@ var zopf = function (title, fn) {
     title = null
   }
 
-  ava(title, wrap(fn))
-}
-
-/**
- * To use as a last resort, when mocking global resources -
- * usually a sign of test smell
- */
-zopf.serial = function (title, fn) {
-  if (typeof title !== 'string') {
-    fn = title
-    title = null
-  }
-
-  ava.serial(title, wrap(fn))
+  tape(title, wrap(fn))
 }
 
 module.exports = zopf

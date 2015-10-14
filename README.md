@@ -17,8 +17,8 @@ or file, then zopf just might be for you.
 
 ## Usage & examples
 
-zopf is actually a thin wrapper over [AVA][], which means you can use it
-pretty much like [tape][]:
+zopf is actually a thin wrapper over [tape][], which means you can use it
+pretty much the same:
 
 ```javascript
 var test = require('zopf')
@@ -28,14 +28,15 @@ test('basic test', function (t) {
 })
 ```
 
-The first difference, you don't need to call `t.end()`. This is no problem
-for synchronous tests. For async tests, you need to return a promise. If it
-resolves, the test will pass, if it rejects, the test will fail. Anything
-thrown in the test body is treated as a rejection.
+You don't need to call `t.end()`.
 
-The second difference is, the context, `t`, is augmented with a [sinon][]
-sandbox that lets you create spies, stubs and mocks, and verifies all of them
-at the end of the test.
+If you return a Promise, the test will be async and will pass if no assertion
+fail and the promise resolves.
+
+If you return something else, the test will end there.
+
+The context, `t`, is augmented with a [sinon][] sandbox that lets you create
+spies, stubs and mocks, and verifies all of them at the end of the test.
 
 ```javascript
 import test from 'zopf'
@@ -63,29 +64,22 @@ In that last example:
   * If `foo.bar()` resolves, our mock has been called, but the return
     value is wrong, the test will fail
 
-[AVA]: https://ava.li
 [tape]: https://www.npmjs.com/package/tape
 [sinon]: http://sinonjs.org/
 
-## Serial tests
-
-Since [AVA][] runs tests concurrently by default, but that doesn't work well
-when mocking the same object differently, zopf supports AVA-style serial test
-definition: simply use `test.serial` instead of `test`.
-
 ## Running tests
 
-Simply use [AVA][] to run your zopf tests - as long as you `require('zopf')`
-instead of `require('ava')` you'll get all the zopf niceties for free.
+Simply use [tape][] to run your zopf tests - as long as you `require('zopf')`
+instead of `require('tape')` you'll get all the zopf niceties for free.
 
-The best way is probably to run `npm install --save-dev ava` and add an npm
+The best way is probably to run `npm install --save-dev tape` and add an npm
 script to your package.json:
 
 ```json
 {
   "name": "yourpackage",
   "scripts": {
-    "test": "ava 'spec/*-test.js'"
+    "test": "tape spec/*-test.js"
   }
 }
 ```

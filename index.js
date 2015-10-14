@@ -4,6 +4,8 @@ var ava = require('ava')
 var sinon = require('sinon')
 var Promise = require('bluebird')
 
+Promise.longStackTraces()
+
 var wrap = function (fn) {
   return function (t) {
     // a sinon sandbox for spies, stubs and mocks
@@ -13,16 +15,31 @@ var wrap = function (fn) {
     })
 
     // returning a promise makes AVA run it asynchronously
-    return new Promise(function (resolve, reject) {
-      try {
-        resolve(fn(t))
-      } catch (e) {
-        reject(e.stack)
-      }
-      resolve()
-    }).then(() => {
+    return Promise.method(fn)(t).then(() => {
       // Only verify sandbox if we didn't get another response
       sandbox.verifyAndRestore()
+    }).catch((e) => {
+      if (e && e.stack) {
+        var lines = e.stack.split('\n')
+        var i = 0
+        var out = ''
+
+        // find first zopf occurence in stack trace
+        while (i < lines.length) {
+          var line = lines[i]
+          if (/node_modules.zopf/.test(line)) {
+            i--
+            break
+          }
+          i++
+        }
+
+        throw lines.slice(0, i).filter(function (x) {
+          return !/node_modules.bluebird/.test(x)
+        }).join('\n')
+      } else {
+        throw e
+      }
     })
   }
 }

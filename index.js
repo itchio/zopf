@@ -7,6 +7,10 @@ require('sinon-as-promised')(Promise)
 
 Promise.longStackTraces()
 
+var clone = function (x) {
+  return JSON.parse(JSON.stringify(x))
+}
+
 var wrap = function (title, fn, sub) {
   return function (t) {
     var pass_name = sub ? title : 'pass'
@@ -24,18 +28,18 @@ var wrap = function (title, fn, sub) {
       })
     }
 
-    t.all = function (args) {
-      return Promise.map(args, function (promise) {
-        var name = 'anonymous promise'
-        if (Array.isArray(promise)) {
-          var spec = promise
-          promise = spec[0]
-          name = spec[1]
-        }
-        return promise.then(function () {
-          t.pass(name)
-        })
-      }, {concurrency: 1})
+    t.sameSet = function (a, b, message) {
+      var x = clone(a).sort()
+      var y = clone(b).sort()
+      t.same(x, y, message)
+    }
+
+    t.samePaths = function (a, b, message) {
+      var path = require('path')
+      var normalize = function (x) { return path.normalize(x) }
+      var x = a.map(normalize)
+      var y = b.map(normalize)
+      t.sameSet(x, y, message)
     }
 
     var cases = []

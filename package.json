@@ -19,6 +19,7 @@
   "dependencies": {
     "bluebird": "^2.10.2",
     "sinon": "^1.17.1",
+    "sinon-as-promised": "^4.0.0",
     "source-map-support": "^0.3.2",
     "tape": "^4.2.1"
   },

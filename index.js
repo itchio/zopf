@@ -3,6 +3,7 @@ require('source-map-support').install()
 var tape = require('tape')
 var sinon = require('sinon')
 var Promise = require('bluebird')
+require('sinon-as-promised')(Promise)
 
 Promise.longStackTraces()
 
@@ -79,9 +80,6 @@ var wrap = function (title, fn) {
   }
 }
 
-/**
- * Ran concurrently, write tests accordingly!
- */
 var zopf = function (title, fn) {
   if (typeof title !== 'string') {
     fn = title

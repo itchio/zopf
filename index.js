@@ -7,8 +7,10 @@ require('sinon-as-promised')(Promise)
 
 Promise.longStackTraces()
 
-var wrap = function (title, fn) {
+var wrap = function (title, fn, sub) {
   return function (t) {
+    var pass_name = sub ? title : 'pass'
+
     // a sinon sandbox for spies, stubs and mocks
     var sandbox = sinon.sandbox.create({
       injectInto: t,
@@ -36,9 +38,41 @@ var wrap = function (title, fn) {
       }, {concurrency: 1})
     }
 
-    Promise.method(fn)(t).then(() => {
+    var cases = []
+
+    t.case = function (title, fn) {
+      var t2 = {}
+      for (var k of Object.keys(t)) {
+        switch (k) {
+          case 'spy':
+          case 'stub':
+          case 'mock':
+            break
+          default:
+            t2[k] = t[k]
+        }
+      }
+      var fnw = wrap(title, fn, true)
+      cases.push(Promise.method(() => fnw(t2)))
+    }
+
+    return Promise.method(fn)(t).then(() => {
       // Only verify sandbox if we didn't get another response
       sandbox.verify()
+    }).then(() => {
+      if (cases.length > 0) {
+        var val = Promise.resolve()
+        for (var i = 0; i < cases.length; i++) {
+          val = val.then(cases[i])
+        }
+        return val
+
+        // return Promise.all(cases).then(() => {
+        //   console.log(`All cases have been ran`)
+        // })
+      } else if (t.assertCount === 0) {
+        t.pass(pass_name)
+      }
     }).catch((e) => {
       if (e && e.stack) {
         var lines = e.stack.split('\n')
@@ -64,18 +98,14 @@ var wrap = function (title, fn) {
         var frame_lines = filtered_lines.filter(is_stack_frame)
         var message_lines = filtered_lines.filter(function (x) { return !is_stack_frame(x) })
 
-        t.fail(message_lines.join(' '))
+        t.fail([title].concat(message_lines).join(' '))
         frame_lines.forEach(function (line) { console.log(line) })
       } else {
         t.fail(e)
       }
-    }).then(() => {
-      if (t.assertCount === 0) {
-        t.pass('pass')
-      }
     }).finally(() => {
       sandbox.restore()
-      t.end()
+      if (!sub) t.end()
     })
   }
 }
@@ -86,7 +116,7 @@ var zopf = function (title, fn) {
     title = null
   }
 
-  tape(title, wrap(title, fn))
+  tape(title, wrap(title, fn, false))
 }
 
 module.exports = zopf

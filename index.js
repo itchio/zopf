@@ -93,7 +93,7 @@ var wrap = function (title, fn, sub) {
         })
 
         var is_stack_frame = function (line) {
-          return /^\s*at /.test(line)
+          return /^\s*at /.test(line) || /From previous event/.test(line)
         }
         var frame_lines = filtered_lines.filter(is_stack_frame)
         var message_lines = filtered_lines.filter(function (x) { return !is_stack_frame(x) })

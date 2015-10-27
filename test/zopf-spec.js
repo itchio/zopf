@@ -1,11 +1,12 @@
 var test = require('../index.js')
+var sinon = require('sinon')
 var Promise = require('bluebird')
 
 test('noop test', t => {})
 
 var foo = {
   bar: () => Promise.resolve(11),
-  baz: () => Promise.reject(22)
+  baz: () => Promise.reject(new Error('22'))
 }
 
 test('passing promise', t => {
@@ -13,7 +14,7 @@ test('passing promise', t => {
 })
 
 test('failing promise', t => {
-  return foo.baz().catch(e => t.is(e, 22))
+  return foo.baz().catch(e => t.is(e.message, '22'))
 })
 
 test('sync spy', t => {
@@ -25,7 +26,7 @@ test('sync spy', t => {
 test('async spy', t => {
   var spy = t.spy()
   foo.baz().catch(spy).finally(() => {
-    t.true(spy.calledWith(22))
+    t.true(spy.calledWith(sinon.match({message: '22'})))
   })
 })
 

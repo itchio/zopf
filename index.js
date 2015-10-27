@@ -3,9 +3,13 @@ require('source-map-support').install()
 var tape = require('tape')
 var sinon = require('sinon')
 var Promise = require('bluebird')
-require('sinon-as-promised')(Promise)
+Promise.config({
+  warnings: true,
+  longStackTraces: true,
+  cancellation: true
+})
 
-Promise.longStackTraces()
+require('sinon-as-promised')(Promise)
 
 var clone = function (x) {
   return JSON.parse(JSON.stringify(x))

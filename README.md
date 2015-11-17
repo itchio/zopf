@@ -1,7 +1,8 @@
 # zopf
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
 [![Build Status](https://travis-ci.org/itchio/zopf.svg)](https://travis-ci.org/itchio/zopf)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 [![Dependency Status](https://david-dm.org/itchio/zopf.svg)](https://david-dm.org/itchio/zopf)
 
 If you're running a bunch of tests:

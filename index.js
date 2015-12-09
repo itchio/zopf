@@ -4,9 +4,8 @@ var tape = require('tape')
 var sinon = require('sinon')
 var Promise = require('bluebird')
 Promise.config({
-  warnings: true,
-  longStackTraces: true,
-  cancellation: true
+  warnings: false,
+  longStackTraces: true
 })
 
 require('sinon-as-promised')(Promise)

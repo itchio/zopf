@@ -26,7 +26,7 @@ var wrap = function (title, fn, sub) {
 
     t.rejects = function (promise) {
       var sentinel = t.spy()
-      return promise.catch(sentinel).finally(function () {
+      return Promise.resolve(promise).catch(sentinel).finally(function () {
         sinon.assert.calledOnce(sentinel)
       })
     }

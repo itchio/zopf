@@ -130,6 +130,9 @@ var zopf = function (title, fn) {
 zopf.module = function (obj) {
   obj.__esModule = true
   obj.default = obj
+  if (!obj.hasOwnProperty('@noCallThru')) {
+    obj['@noCallThru'] = true
+  }
   return obj
 }
 

@@ -1,3 +1,4 @@
+
 require('source-map-support').install()
 
 var tape = require('tape')
@@ -124,6 +125,12 @@ var zopf = function (title, fn) {
   }
 
   tape(title, wrap(title, fn, false))
+}
+
+zopf.module = function (obj) {
+  obj.__esModule = true
+  obj.default = obj
+  return obj
 }
 
 module.exports = zopf

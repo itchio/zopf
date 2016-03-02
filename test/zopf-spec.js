@@ -51,3 +51,10 @@ test('async mock', t => {
     t.is(res, 33)
   })
 })
+
+test('test module', t => {
+  var x = test.module({
+    a: 42
+  })
+  t.same(x.a, x.default.a)
+})

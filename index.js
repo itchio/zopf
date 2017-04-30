@@ -1,13 +1,7 @@
 
-require('source-map-support').install()
-
 var tape = require('tape')
 var sinon = require('sinon')
 var Promise = require('bluebird')
-Promise.config({
-  warnings: false,
-  longStackTraces: true
-})
 
 require('sinon-as-promised')(Promise)
 

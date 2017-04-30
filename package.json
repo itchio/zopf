@@ -1,6 +1,6 @@
 {
   "name": "zopf",
-  "version": "4.5.0",
+  "version": "5.0.0",
   "description": "tape + sinon + promises + sourcemaps = zopf",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,6 @@
     "bluebird": "^3.0.0",
     "sinon": "^1.17.1",
     "sinon-as-promised": "^4.0.0",
-    "source-map-support": "^0.3.2",
     "tape": "^4.2.1"
   },
   "devDependencies": {

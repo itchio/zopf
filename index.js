@@ -9,6 +9,8 @@ var clone = function (x) {
   return JSON.parse(JSON.stringify(x))
 }
 
+var zopf;
+
 var wrap = function (title, fn, sub) {
   return function (t) {
     var pass_name = sub ? title : 'pass'
@@ -58,7 +60,12 @@ var wrap = function (title, fn, sub) {
       cases.push(Promise.method(() => fnw(t2)))
     }
 
+    let startedAt = Date.now();
+    let finishedAt;
+
     return Promise.method(fn)(t).then(() => {
+      finishedAt = Date.now();
+
       // Only verify sandbox if we didn't get another response
       sandbox.verify()
     }).then(() => {
@@ -106,13 +113,15 @@ var wrap = function (title, fn, sub) {
         t.fail(e)
       }
     }).finally(() => {
+      let duration = (finishedAt - startedAt);
+      zopf.testDurations.push({title, duration});
       sandbox.restore()
       if (!sub) t.end()
     })
   }
 }
 
-var zopf = function (title, fn) {
+zopf = function (title, fn) {
   if (typeof title !== 'string') {
     fn = title
     title = null
@@ -129,5 +138,7 @@ zopf.module = function (obj) {
   }
   return obj
 }
+
+zopf.testDurations = [];
 
 module.exports = zopf

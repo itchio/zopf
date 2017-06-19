@@ -9,7 +9,7 @@ var clone = function (x) {
   return JSON.parse(JSON.stringify(x))
 }
 
-var zopf;
+var zopf
 
 var wrap = function (title, fn, sub) {
   return function (t) {
@@ -60,11 +60,11 @@ var wrap = function (title, fn, sub) {
       cases.push(Promise.method(() => fnw(t2)))
     }
 
-    let startedAt = Date.now();
-    let finishedAt;
+    let startedAt = Date.now()
+    let finishedAt
 
     return Promise.method(fn)(t).then(() => {
-      finishedAt = Date.now();
+      finishedAt = Date.now()
 
       // Only verify sandbox if we didn't get another response
       sandbox.verify()
@@ -113,10 +113,12 @@ var wrap = function (title, fn, sub) {
         t.fail(e)
       }
     }).finally(() => {
-      let duration = (finishedAt - startedAt);
-      zopf.testDurations.push({title, duration});
+      let duration = (finishedAt - startedAt)
+      zopf.testDurations.push({title, duration})
       sandbox.restore()
-      if (!sub) t.end()
+      if (!sub) {
+        t.end()
+      }
     })
   }
 }
@@ -139,6 +141,6 @@ zopf.module = function (obj) {
   return obj
 }
 
-zopf.testDurations = [];
+zopf.testDurations = []
 
 module.exports = zopf

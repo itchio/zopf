@@ -1,6 +1,6 @@
 {
   "name": "zopf",
-  "version": "6.1.0",
+  "version": "7.0.0",
   "description": "tape + sinon + promises + sourcemaps = zopf",
   "main": "index.js",
   "scripts": {

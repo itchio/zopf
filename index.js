@@ -75,43 +75,11 @@ var wrap = function (title, fn, sub) {
           val = val.then(cases[i])
         }
         return val
-
-        // return Promise.all(cases).then(() => {
-        //   console.log(`All cases have been ran`)
-        // })
       } else if (t.assertCount === 0) {
         t.pass(pass_name)
       }
     }).catch((e) => {
-      if (e && e.stack) {
-        var lines = e.stack.split('\n')
-        var i = 0
-
-        // find first zopf occurence in stack trace
-        while (i < lines.length) {
-          var line = lines[i]
-          if (/node_modules.zopf/.test(line)) {
-            i--
-            break
-          }
-          i++
-        }
-
-        var filtered_lines = lines.slice(0, i).filter(function (x) {
-          return !/node_modules.bluebird/.test(x)
-        })
-
-        var is_stack_frame = function (line) {
-          return /^\s*at /.test(line) || /From previous event/.test(line)
-        }
-        var frame_lines = filtered_lines.filter(is_stack_frame)
-        var message_lines = filtered_lines.filter(function (x) { return !is_stack_frame(x) })
-
-        t.fail([title].concat(message_lines).join(' '))
-        frame_lines.forEach(function (line) { console.log(line) })
-      } else {
-        t.fail(e)
-      }
+      t.fail(e)
     }).finally(() => {
       let duration = (finishedAt - startedAt)
       zopf.testDurations.push({title, duration})
